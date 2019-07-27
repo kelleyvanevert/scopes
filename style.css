@@ -1,0 +1,82 @@
+
+html {
+  font-size: 18px;
+}
+
+body {
+  font-size: 1rem;
+  line-height: 130%;
+  margin: 1rem 2rem 10rem;
+}
+
+.wrap {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.logo {
+  width: 10rem;
+  height: auto;
+  display: block;
+}
+
+h1 {
+  margin: 3rem 0 1.5rem 0;
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+h2 {
+  margin: 3rem 0 1.5rem 0;
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+}
+
+p {
+  margin: 1.5rem 0;
+}
+
+.tagline {
+  margin-top: -1rem;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+  font-style: italic;
+}
+
+a {
+  color: #2196f3;
+}
+
+a:hover {
+  color: #1270bb;
+}
+
+pre {
+  margin: 1.5rem 0;
+
+  font-family: Menlo, Consolas, "Ubuntu Mono", monospace;
+  padding: 1rem;
+  border: 1px solid #ccc;
+
+  white-space: pre-wrap;
+}
+
+code {
+  font-size: .9em;
+}
+
+.keyword {
+  font-weight: bold;
+}
+
+.str {
+  color: #3fa343;
+}
+
+.scv {
+  color: #e91e63;
+}
+
+.comment {
+  color: #aaa;
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Scopes</title>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+</head>
+<body>
+
+<div class="wrap">
+  <img class="logo" src="./logo.png" />
+
+  <h1>Introducing the scopes programming language</h1>
+  <p class="tagline">If JavaScript scopes and objects are so alike, then why do we need both concepts at the same time?</p>
+
+  <p>The Scopes programming language takes the saying "<em>Objects are a poor man's closures</em>" (and its reverse, "<em>Closures are a poor man's objects</em>") seriously. The saying is especially truthful in the case of JavaScript due to the way that its prototypal inheritance chain works identical to lexical variable lookup. Scopes removes the conceptual distinction between the two. Here's what that looks like:</p>
+
+  <pre><span class="keyword">let</span> adjective = <span class="str">"awesome"</span>;
+
+<span class="keyword">let</span> concepts = [
+  { <span class="keyword">let</span> name = <span class="str">"objects"</span>; <span class="keyword">let</span> adjective = <span class="str">"boring"</span> }
+  { <span class="keyword">let</span> name = <span class="str">"scopes"</span> }
+]
+
+<span class="keyword">let</span> describe = concept =&gt;
+  <span class="str">`${</span>concept.name<span class="str">} are ${</span>concept.adjective<span class="str">}`</span>
+
+console.log( concepts.map(describe) )
+<span class="comment">// ["objects are boring", "scopes are awesome"]</span></pre>
+
+  <p>It's pretty much JavaScript already, right? A super straightforward transpilation step gives us:</p>
+
+  <pre><span class="keyword">let</span> <span class="scv">_S1</span> = Object.create(null);
+<span class="scv">_S1</span>.adjective = <span class="str">"awesome"</span>;
+
+  <span class="keyword">let</span> <span class="scv">_S2</span> = _Array_create(<span class="scv">_S1</span>);
+
+    <span class="keyword">let</span> <span class="scv">_S3</span> = Object.create(<span class="scv">_S2</span>);
+    <span class="scv">_S3</span>.name = <span class="str">"objects"</span>;
+    <span class="scv">_S3</span>.adjective = <span class="str">"boring"</span>;
+  
+  <span class="scv">_S2</span>.push(<span class="scv">_S3</span>);
+
+    <span class="keyword">let</span> <span class="scv">_S4</span> = Object.create(<span class="scv">_S2</span>);
+    <span class="scv">_S4</span>.name = <span class="str">"scopes"</span>;
+  
+  <span class="scv">_S2</span>.push(<span class="scv">_S4</span>);
+
+<span class="scv">_S1</span>.people = <span class="scv">_S2</span>;
+<span class="scv">_S1</span>.describe = concept =&gt;
+  <span class="str">`${</span>concept.name<span class="str">} are ${</span>concept.adjective<span class="str">}`</span>
+
+console.log( <span class="scv">_S1</span>.people.map(<span class="scv">_S1</span>.describe) );
+<span class="comment">// ["objects are boring", "scopes are awesome"]</span></pre>
+
+  <p>And about that <code>_Array_create</code> function in the transpilation output, it's a simple helper that "glues" together the prototype chain in the way we want it: (1) the outer scope &mdash; (2) the array methods (Array prototype) &mdash; (3) the array itself:</p>
+
+  <pre><span class="keyword">let</span> __ArrayMethods = (() =&gt; {
+  <span class="keyword">let</span> { map, filter, reduce, push /* etc */ } = [];
+  <span class="keyword">return</span> { map, filter, reduce, push /* etc */ };
+})();
+
+<span class="keyword">let</span> __Array_create = S =&gt; {
+  <span class="keyword">let</span> A = Object.create(S);
+  Object.assign(A, __ArrayMethods);
+  <span class="keyword">return</span> Object.create(A);
+}</pre>
+
+
+  <h2>FAQ</h2>
+
+  <p>
+    <strong>Is this even a good idea?</strong>
+    <br />
+    I don't know! But eliminating concepts seems like generally a good idea, so I'm giving it a try.
+  </p>
+
+  <p>
+    <strong>This is hardly a description of a language, where's the rest?</strong>
+    <br />
+    Coming very soon. There'll be a language description, a transpiler, more interesting examples, etc. For now, this is just a quick intro page so that I can register the wonderful domain name <code>https://scopes.js.org/</code> :D
+  </p>
+
+  <p>
+    <strong>I'm not so sure about the logo... is this the final design?</strong>
+    <br />
+    Nope. I want to do something playful with the JS-square trend, but I'm not very graphically oriented, haha! Designs and ideas are welcome :)
+  </p>
+
+  <p>
+    <strong>Who is this coming from? Can I get in contact?</strong>
+    <br />
+    For sure! It's me, <a href="https://klve.nl">Kelley van Evert</a>, hit me up!
+  </p>
+</div>
+
+</body>
+</html>
