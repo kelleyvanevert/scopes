@@ -57,14 +57,14 @@ console.log( <span class="scv">_S1</span>.people.map(<span class="scv">_S1</span
 
   <p>And about that <code>_Array_create</code> function in the transpilation output, it's a simple helper that "glues" together the prototype chain in the way we want it: (1) the outer scope &mdash; (2) the array methods (Array prototype) &mdash; (3) the array itself:</p>
 
-  <pre><span class="keyword">let</span> __ArrayMethods = (() =&gt; {
+  <pre><span class="keyword">let</span> _ArrayMethods = (() =&gt; {
   <span class="keyword">let</span> { map, filter, reduce, push /* etc */ } = [];
   <span class="keyword">return</span> { map, filter, reduce, push /* etc */ };
 })();
 
-<span class="keyword">let</span> __Array_create = S =&gt; {
+<span class="keyword">let</span> _Array_create = S =&gt; {
   <span class="keyword">let</span> A = Object.create(S);
-  Object.assign(A, __ArrayMethods);
+  Object.assign(A, _ArrayMethods);
   <span class="keyword">return</span> Object.create(A);
 }</pre>
 
